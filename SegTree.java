@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class SegTree {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     static class Pair {
