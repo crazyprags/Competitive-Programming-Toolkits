@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class trial {
+public class nCr {
     static int M = (int) 1e9 + 7;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static int[] factorial = new int[100001];
