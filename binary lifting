@@ -1,0 +1,63 @@
+public static void solve(StringBuilder sb) throws IOException
+    {
+        String nq[] = br.readLine().split(" ");
+        int n = Integer.parseInt(nq[0]);
+        int q = Integer.parseInt(nq[1]);
+        ArrayList<Integer>[] adj = new ArrayList[n+1];
+        for(int i=1; i<=n; i++) adj[i] = new ArrayList<>();
+        for(int i=1; i<n; i++)
+        {
+            String uv[] = br.readLine().split(" ");
+            int u = Integer.parseInt(uv[0]);
+            int v = Integer.parseInt(uv[1]);
+
+            adj[u].add(v);
+            adj[v].add(u);
+        }
+        int depth[] = new int[n+1];
+        int dp[][] = new int [n+1][20];
+        dfs(adj, 1, 1, depth, dp);
+
+        for(int j=1; j<=19; j++)
+        {
+            for(int i=1; i<=n; i++)
+            {
+                dp[i][j] = dp[dp[i][j-1]][j-1];
+            }
+        }
+
+        while(q-->0)
+        {
+            String xy[] = br.readLine().split(" ");
+            int x = Integer.parseInt(xy[0]);
+            int y = Integer.parseInt(xy[1]);
+
+            if(depth[x]<depth[y])
+            {
+                int t = x;
+                x = y;
+                y = t;
+            }
+
+            int dis = depth[x]-depth[y];
+            for(int i=0; i<=19; i++)
+            {
+                if((dis&(1<<i))>0)  x = dp[x][i];
+            }
+            if(x==y)
+            {
+                sb.append(x).append("\n");
+                continue;
+            }
+            for(int i=19; i>=0; i--)
+            {
+                if(dp[x][i]>0 && dp[x][i]!=dp[y][i])
+                {
+                    x = dp[x][i];
+                    y = dp[y][i];
+                }
+            }
+
+            sb.append(dp[x][0]).append("\n");
+        }
+    }
