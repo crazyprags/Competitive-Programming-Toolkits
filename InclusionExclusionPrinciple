@@ -1,0 +1,27 @@
+public static BigInteger cntPrime(long r, long[] bad)
+    {
+        BigInteger rr = BigInteger.valueOf(r);
+        BigInteger sum = BigInteger.ZERO;
+        int n = bad.length;
+
+        for (int msk = 1; msk < (1 << n); msk++) {
+            BigInteger mult = BigInteger.ONE;
+            int bits = 0;
+
+            for (int i = 0; i < n; i++) {
+                if ((msk & (1 << i)) != 0) {
+                    bits++;
+                    mult = mult.multiply(BigInteger.valueOf(bad[i]));
+                }
+            }
+            BigInteger cur = rr.divide(mult);
+
+            if (bits % 2 == 1) {
+                sum = sum.add(cur);
+            } else {
+                sum = sum.subtract(cur);
+            }
+        }
+
+        return rr.subtract(sum);
+    }
