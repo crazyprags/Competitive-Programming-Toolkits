@@ -1,0 +1,23 @@
+// Cartesian tree
+
+        int n = Integer.parseInt(br.readLine());
+        int[] a = new int[n];
+        String sa[] = br.readLine().split(" ");
+        for(int i=0; i<n; i++)  a[i] = Integer.parseInt(sa[i]);
+        int[] l = new int[n+1], r = new int[n+1];
+        Arrays.fill(l, -1);
+        Arrays.fill(r, -1);
+        Stack<Integer> st = new Stack<>();
+
+        for(int i=0; i<n; i++){
+            int last = -1;
+
+            while(!st.empty() && a[st.peek()]<a[i]){
+                last = st.pop();
+            }
+
+            if(last!=-1)    l[i] = last;
+            if(st.size()>0) r[st.peek()] = i;
+
+            st.push(i);
+        }
